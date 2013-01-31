@@ -10,6 +10,7 @@ class ListPicName(SGMLParser):
 		if href:
 			self.urlList.append(href)
 			print href
+
 def loadUrl(url):
 	u = urllib2.urlopen(url)
 	content = u.read()
@@ -22,5 +23,5 @@ def loadUrl(url):
 if __name__ == '__main__':
 #	print "input url:"
 #	url = raw_input()
-	url = "http://www.douban.com/photos/photo/1852669569/"
+	url = "http://www.douban.com/photos/album/73423419/"
 	loadUrl(url)
