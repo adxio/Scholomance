@@ -9,38 +9,48 @@
 import os
 import json
 import urllib
+
+from threading import Thread
 from pyquery import PyQuery as pqr
 
-def download_pic(pic_id, pic_info, query_word):
+def download_pic(pic_id, pic_info, pic_idx, page_idx, folder_name):
+    global pic_no
+
     pic_doc = pqr(url="http://500px.com/photo/" + pic_id)
     pic_url =  pqr(pic_doc("div.photo.segment img")).attr("src")
-    urllib.urlretrieve(pic_url, query_word + "/" + pic_id + "." + pic_url.split(".")[-1])
-    fileHandle = open(query_word + "/" + pic_id + ".txt", "w")
+    urllib.urlretrieve(pic_url, folder_name + "/" + pic_id + "." + pic_url.split(".")[-1])
+    fileHandle = open(folder_name + "/" + pic_id + ".txt", "w")
 
     fileHandle.write("info: " + pic_info["info"] + "\n")
     fileHandle.write("title: " + pic_info["title"] + "\n")
     fileHandle.write("rating: " + pic_info["rating"] + "\n")
     fileHandle.close()
+    pic_no += 1
+    print "Download complete: " + str(pic_idx) + " at Page " + str(page_idx) + ", total: " + str(pic_no)
 
-def scan_page(site_url, query_word):
-    global page_no
-    global pic_no
+def scan_page(site_url, folder_name):
     print "Searching pictures at Page " + str(page_no) + " ..."
+
+    folder_name = folder_name + "/" + str(page_no)
+    if not os.path.exists(folder_name):
+        os.mkdir(folder_name)
 
     doc = pqr(url=site_url)
     pic_div_list = doc("#px div.container div.d4")
+    i = 0
     for pic in pic_div_list:
         href = pqr(pqr(pic).find("div.photo a")).attr("href")
         pic_id = href.split("/")[-1]
         pic_info = {}
-        pic_info["info"] = pqr(pqr(pic).find("div.info a")).text()
-        pic_info["title"] = pqr(pqr(pic).find("div.title a")).text()
-        pic_info["rating"] = pqr(pqr(pic).find("div.rating")).text()
+        pic_info["info"] = pqr(pqr(pic).find("div.info a")).text().encode('utf-8')
+        pic_info["title"] = pqr(pqr(pic).find("div.title a")).text().encode('utf-8')
+        pic_info["rating"] = pqr(pqr(pic).find("div.rating")).text().encode('utf-8')
 
-        pic_no += 1
-        print "Downloading ..."
-        download_pic(pic_id, pic_info, query_word)
-        print "Download complete: " + str(pic_no) + " at Page " + str(page_no)
+        i += 1
+        worker = Thread(target=download_pic , args= (pic_id, pic_info, i, page_no, folder_name))
+        worker.setDaemon(True)
+        worker.start()
+
 
 if __name__ == '__main__':
     print "Start download"
@@ -53,7 +63,7 @@ if __name__ == '__main__':
 
     query_word = "Sri+Lanka"
     from_idx = 1
-    to_idx = 827
+    to_idx = 10
 
     print "Create folder: " + query_word
     if not os.path.exists(query_word):
@@ -63,3 +73,5 @@ if __name__ == '__main__':
         page_no += 1
         site_url = "http://500px.com/search?exclude_nude=true&type=photos&page=" + str(page) + "&q=" + query_word
         scan_page(site_url, query_word)
+
+    print "Complete!!!"
