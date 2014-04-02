@@ -38,6 +38,8 @@ def scan_page(site_url, folder_name):
     doc = pqr(url=site_url)
     pic_div_list = doc("#px div.container div.d4")
     i = 0
+
+    work_list = []
     for pic in pic_div_list:
         href = pqr(pqr(pic).find("div.photo a")).attr("href")
         pic_id = href.split("/")[-1]
@@ -48,8 +50,10 @@ def scan_page(site_url, folder_name):
 
         i += 1
         worker = Thread(target=download_pic , args= (pic_id, pic_info, i, page_no, folder_name))
-        worker.setDaemon(True)
+        work_list.append(worker)
         worker.start()
+    for work in work_list:
+        work.join()
 
 
 if __name__ == '__main__':
@@ -63,7 +67,7 @@ if __name__ == '__main__':
 
     query_word = "Sri+Lanka"
     from_idx = 1
-    to_idx = 10
+    to_idx = 3
 
     print "Create folder: " + query_word
     if not os.path.exists(query_word):
