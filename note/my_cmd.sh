@@ -25,4 +25,6 @@ git config --global color.branch auto
 git config --global alias.co checkout
 git config --global alias.br branch
 git config --global alias.ci commit
-git config --global alias.st status
+git config --global alias.st 'status -sb'
+
+git branch --set-upstream-to=origin/<branch> <my-branch>
