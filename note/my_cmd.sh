@@ -28,3 +28,6 @@ git config --global alias.ci commit
 git config --global alias.st 'status -sb'
 
 git branch --set-upstream-to=origin/<branch> <my-branch>
+
+
+export PATH=$PATH:/usr/local/go/bin
