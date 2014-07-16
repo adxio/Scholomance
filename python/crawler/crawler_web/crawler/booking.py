@@ -19,10 +19,14 @@ def download_img(img_url, save_path):
 
     urllib.urlretrieve(img_url, os.path.join(save_path, img_url.split("/")[-1]))
     img_idx += 1
-    print "Download complete: " + str(float(img_idx)/img_cnt * 100)
+
+    if img_idx == img_cnt:
+        print "Download all complete: " + save_path.split("/")[-1].encode('utf-8') + "!!!"
+    else:
+        print "Download %s: %.1f%%" % (save_path.split("/")[-1].encode('utf-8'), float(img_idx)/img_cnt * 100)
 
 def start_download(site_url):
-    print "Start download"
+    print "Start download: " + site_url.encode('utf-8')
 
     global img_idx
     global img_cnt
@@ -30,13 +34,14 @@ def start_download(site_url):
     img_idx = 0
     img_cnt = 0
 
-    root_path = "/Users/nangua/Desktop/Test/"
+    root_path = "/var/storage/图片收集/booking/"
+    # root_path = "/Users/nangua/Desktop/test"
 
     doc = pqr(url=site_url)
 
     save_path = os.path.join(root_path, doc("#hp_hotel_name").text())
 
-    print "Create folder: " + save_path
+    print "Create folder: " + save_path.encode('utf-8')
     if not os.path.exists(save_path):
         os.makedirs(save_path)
 

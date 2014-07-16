@@ -1,4 +1,4 @@
-$def with (path)
+$def with (logs)
 <!DOCTYPE html>
 <!-- saved from url=(0048)http://getbootstrap.com/examples/non-responsive/ -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -65,8 +65,9 @@ $def with (path)
     </div>
 
     <div class="container">
-      <div style="margin-top: 120px">
-        <p>已开始下载图片，请在共享盘 <b>"$path"</b> 文件夹下查看结果。</p>
+      <div style="margin-top: 60px">
+        $for log in logs:
+        <p>$log</p>
       </div>
     </div> <!-- /container -->
 

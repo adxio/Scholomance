@@ -30,4 +30,14 @@ git config --global alias.st 'status -sb'
 git branch --set-upstream-to=origin/<branch> <my-branch>
 
 
-export PATH=$PATH:/usr/local/go/bin
+tratao: 2984431774 FT9-aBB-c3R-pdz
+
+00 3 * * * pg_dump -U tratao -d bms -f /home/tratao/backup/bms-`date +%Y%m%d`.sql
+
+mbp:
+高度: 2.41 厘米 (0.95 英寸)
+宽度：32.5 厘米 (12.78 英寸)
+深度：22.7 厘米 (8.94 英寸)
+重量：2.06 千克 (4.5 磅)2
+
+云梯，用户名：brucewilliam；密码：0085818588
