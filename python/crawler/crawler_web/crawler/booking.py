@@ -21,8 +21,8 @@ def download_img(img_url, save_path):
     img_idx += 1
 
     if img_idx == img_cnt:
-        os.system("chgrp -R storage %s"%(save_path))
-        os.system("chmod -R 775 %s"%(save_path))
+        # os.system("chgrp -R storage %s"%(save_path.encode('utf-8')))
+        # os.system("chmod -R 775 %s"%(save_path.encode('utf-8')))
         print "Download all complete: " + save_path.split("/")[-1].encode('utf-8') + "!!!"
     else:
         print "Download %s: %.1f%%" % (save_path.split("/")[-1].encode('utf-8'), float(img_idx)/img_cnt * 100)
