@@ -25,7 +25,7 @@ class log:
         logs = []
         line = f.readline()
         while line:
-            if not line.startwith("192"):
+            if not line.startswith("192"):
                 logs.append(line)
             line = f.readline()
 
