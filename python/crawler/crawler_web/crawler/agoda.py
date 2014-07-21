@@ -36,7 +36,7 @@ def start_download(site_url):
     img_idx = 0
     img_cnt = 0
 
-    root_path = u"/var/storage/图片收集/booking/"
+    root_path = u"/var/storage/图片收集/agoda/"
     # root_path = "/Users/nangua/Desktop/test"
 
     doc = pqr(url=site_url)
