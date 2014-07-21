@@ -37,22 +37,23 @@ def start_download(site_url):
     img_cnt = 0
 
     root_path = u"/var/storage/图片收集/booking/"
-    # root_path = "/Users/nangua/Desktop/test/"
+    # root_path = "/Users/nangua/Desktop/test"
 
     doc = pqr(url=site_url)
 
-    save_path = os.path.join(root_path, doc("#hp_hotel_name").text())
+    save_path = os.path.join(root_path, doc("#ctl00_ctl00_MainContent_ContentMain_HotelHeaderHD_lblEHotelName").text()[1:-1])
 
     print "Create folder: " + save_path.encode('utf-8')
+
     if not os.path.exists(save_path):
         os.makedirs(save_path)
 
-    image_list = doc("#photos_distinct a")
+    image_list = doc("#ctl00_ctl00_MainContent_ContentMain_MainHotelPhotoHDAB2659_ThumbPhotosHDAB2659_dtlPhotoAB2659 img")
     work_list = []
     img_cnt = len(image_list)
     for img in image_list:
-        img_url = pqr(img).attr("data-resized")
-        worker = Thread(target=download_img, args=(img_url, save_path))
+        img_url = pqr(img).attr("src")
+        worker = Thread(target=download_img, args=(img_url.replace("_TMB", "_800x600"), save_path))
         work_list.append(worker)
         worker.start()
 

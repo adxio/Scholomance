@@ -3,6 +3,7 @@
 
 import web
 from crawler import booking
+from crawler import agoda
 
 urls = (
     "/", "index",
@@ -16,7 +17,12 @@ class index:
     def GET(self):
         return render.index()
     def POST(self):
-        path = booking.start(str(web.input().url))
+        url = str(web.input().url)
+        if url.startswith("http://www.booking.com"):
+            path = booking.start(url)
+        elif url.startswith("http://www.agoda.com"):
+            path = agoda.start(url)
+
         return render.result(path)
 
 class log:
