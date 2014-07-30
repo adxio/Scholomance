@@ -53,7 +53,7 @@ def start_download(site_url):
     for index, img in enumerate(image_list):
         img_url = pqr(img).attr("href")
         if index <= len(name_list)-1:
-            caption = pqr(name_list[index]).text() + ".jpg"
+            caption = pqr(name_list[index]).text()
         else:
             caption = ""
         worker = Thread(target=download_img, args=(img_url, caption, save_path))
