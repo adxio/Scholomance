@@ -4,6 +4,7 @@
 import web
 from crawler import booking
 from crawler import agoda
+from crawler import maldiveschina
 
 urls = (
     "/", "index",
@@ -22,6 +23,10 @@ class index:
             path = booking.start(url)
         elif url.startswith("http://www.agoda.com"):
             path = agoda.start(url)
+        elif url.startswith("http://www.maldiveschina.com"):
+            path = maldiveschina.start(url)
+        else:
+            return "Error"
 
         return render.result(path)
 
