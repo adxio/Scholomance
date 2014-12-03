@@ -3,7 +3,7 @@
 
 # booking网站图片爬虫
 # 用于收藏自己喜欢的精美图片！请勿商用
-# 具体图片使用license请查看500px license(http://500px.com/terms)
+# 具体图片使用license请查看 agoda license
 
 
 import os
@@ -48,7 +48,8 @@ def start_download(site_url):
     if not os.path.exists(save_path):
         os.makedirs(save_path)
 
-    image_list = doc("#ctl00_ctl00_MainContent_ContentMain_MainHotelPhotoHDAB2659_ThumbPhotosHDAB2659_dtlPhotoAB2659 img")
+    # image_list = doc("#ctl00_ctl00_MainContent_ContentMain_MainHotelPhotoHDAB2659_ThumbPhotosHDAB2659_dtlPhotoAB2659 img")
+    image_list = doc("#ctl00_ctl00_MainContent_ContentMain_MainHotelPhotoHD_ThumbPhotosHD_dtlPhoto img")
     work_list = []
     img_cnt = len(image_list)
     for img in image_list:
