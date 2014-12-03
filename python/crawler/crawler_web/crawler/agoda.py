@@ -17,7 +17,7 @@ def download_img(img_url, save_path):
     global img_idx
     global img_cnt
 
-    urllib.urlretrieve(img_url, os.path.join(save_path, img_url.split("/")[-1]))
+    urllib.urlretrieve(img_url, os.path.join(save_path, img_url.split("/")[-1].split("?")[0]))
     img_idx += 1
 
     if img_idx == img_cnt:
@@ -36,8 +36,8 @@ def start_download(site_url):
     img_idx = 0
     img_cnt = 0
 
-    root_path = u"/var/storage/图片收集/agoda/"
-    # root_path = "/Users/nangua/Desktop/test"
+    # root_path = u"/var/storage/图片收集/agoda/"
+    root_path = "/Users/nangua/Desktop/test"
 
     doc = pqr(url=site_url)
 
@@ -54,7 +54,7 @@ def start_download(site_url):
     img_cnt = len(image_list)
     for img in image_list:
         img_url = pqr(img).attr("src")
-        worker = Thread(target=download_img, args=(img_url.replace("_TMB", "_800x600"), save_path))
+        worker = Thread(target=download_img, args=(img_url.replace("s=116x88", "s=800x600"), save_path))
         work_list.append(worker)
         worker.start()
 
